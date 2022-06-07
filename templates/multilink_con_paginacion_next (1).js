@@ -1,6 +1,4 @@
-
-
-/////////////////Paginacion
+// Paginacion
 
 (function() {
     var out = {};
@@ -12,14 +10,15 @@
          if (!pass_it["urls"]) {
          out["pass_it"] = {
 
-             "urls": ["https://",
+             "urls": [
+               "https://",
                      "https://",
                      "https://",
                      "https://",
                      "https://",
                      "https://",
                      "https://,
-                     "https://"]                //Colocar las urls
+                     "https://"
          };
      } else {
          out["pass_it"] = pass_it;
