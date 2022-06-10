@@ -1,0 +1,5 @@
+waitForPageText -> YES
+waitForPageLoadEvent -> YES
+waitForPageResources -> NO
+injectDefaultCodes -> NO
+reloadPageAsAttemptToPagination -> YES
