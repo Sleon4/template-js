@@ -1,6 +1,6 @@
 (function() {
     return {
         wait: true,
-        pic: true
+        // pic: true
     };
 })();

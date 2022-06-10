@@ -1,19 +1,19 @@
 (function() {
     let list = document.querySelectorAll("table.contentlist > tbody > tr.ftlcopy.ftlrow");
-    let jobs = [], id = "", date = "", location = "", nameLocation = [], btnMore = null, data = null;
+    let jobs = [], data = null, id = "", location = "", btnMore = null;
 
     for (let job of list) {
         if (typeof job === 'function') continue;
         if (typeof job === 'number') continue;
         id = job.querySelector('span[id*="requisitionListInterface.reqContestNumberValue"]').textContent.trim();
-        date = job.querySelector("span[id*='requisitionListInterface.reqPostingDate.row']").textContent.trim();
         btnMore = job.querySelector('a[id*="requisitionListInterface.reqMoreLocationAction.row"]');
 
         // objeto con información cargada
         data = {
             title: job.querySelector("span.titlelink > a").textContent.trim(),
+            reqid: id,
             url: (`https://hdr.taleo.net/careersection/jobdetail.ftl?job=${id}&lang=en`).trim(),
-            dateposted_raw: new Date(date).toLocaleDateString('en-US'),
+            dateposted_raw: new Date(job.querySelector("span[id*='requisitionListInterface.reqPostingDate.row']").textContent.trim()).toLocaleDateString('en-US'),
             source_jobtype: job.querySelector('span[id*="requisitionListInterface.reqSchedule.row"]').textContent.trim(),
             source_location: job.querySelector('span[id*="requisitionListInterface.reqBasicLocation.row"]').textContent.trim(),
             temp: 1
@@ -35,10 +35,8 @@
 
         // Validacion para verificar si hay mas de una 'location'
         if (location.includes(',')) {
-            let locs = location.split(',');
-
-            locs.forEach((loc, index) => {
-                jobs.push(data.location = locs[index].trim().split('-').reverse().join(', '));
+            location.split(',').forEach((loc, index) => {
+                jobs.push(data.location = loc.trim().split('-').reverse().join(', '));
             });
         } else {
             jobs.push(data.location = location.split('-').reverse().join(', '));
