@@ -1,6 +1,7 @@
 (function() {
-    let list = document.querySelectorAll("table.contentlist > tbody > tr.ftlcopy.ftlrow");
-    let jobs = [], data = null, id = "", location = "", btnMore = null;
+    const list = document.querySelectorAll("table.contentlist > tbody > tr.ftlcopy.ftlrow");
+    const jobs = [];
+    let data = null, id = "", location = "", btnMore = null;
 
     for (let job of list) {
         if (typeof job === 'function') continue;
