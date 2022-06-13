@@ -4,9 +4,9 @@
             const xmlh = new XMLHttpRequest();
             xmlh.open('GET', url, false);
 
-            let res = null;
+            let res = false;
             xmlh.onreadystatechange = () => {
-                res = xmlh.readyState === 4 && xmlh.status === 200 ? xmlh.responseText : null;
+                res = xmlh.readyState === 4 && xmlh.status === 200 ? xmlh.responseText : false;
             };
             xmlh.send(null);
 
