@@ -5,7 +5,6 @@
     out.has_next_page = false;
 
     if (selector) {
-        msg(selector.href);
         selector.click();
         out.has_next_page = true;
     }
