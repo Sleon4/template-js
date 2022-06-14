@@ -1,4 +1,4 @@
 waitForPageText -> YES
 waitForPageLoadEvent -> NO
-waitForPageResources -> YES
+waitForPageResources -> NO
 reloadPageAsAttemptToPagination -> NO
