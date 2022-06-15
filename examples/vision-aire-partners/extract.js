@@ -19,8 +19,6 @@
                 "sec-fetch-site": "cross-site"
             },
             success: (res) => {
-                limit = res.total;
-
                 for (let job of res.data) {
                     jobs.push({
                         title: job.title.trim(),
@@ -32,6 +30,7 @@
                     });
                 }
 
+                limit = res.total;
                 counter+= 30;
             },
             error: (err) => msg(err)
