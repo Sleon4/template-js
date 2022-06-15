@@ -1,10 +1,8 @@
 (function() {
     const jobs = [];
-    const out = {
-        pass_it: pass_it
-    };
-    let job = out.pass_it.jobs[out.pass_it.cont];
+    const out = { pass_it: pass_it };
     const full_html = document.querySelector('div.container');
+    let job = out.pass_it.jobs[out.pass_it.cont];
 
     if (['undefined', undefined].includes(cleanHTML)) {
         cleanHTML = function(x) {
