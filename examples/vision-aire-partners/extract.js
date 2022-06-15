@@ -1,6 +1,6 @@
 (function () {
     const jobs = [];
-    let counter = 0, limit = 0, json = null, html = '';
+    let counter = 0, limit = 0, html = '';
 
     do {
         $.ajax({
@@ -8,16 +8,6 @@
             type: 'GET',
             dataType: "json",
             async: false,
-            headers: {
-                "accept": "application/json, text/plain, */*",
-                "accept-language": "es-419,es;q=0.9,en-US;q=0.8,en;q=0.7",
-                "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"102\", \"Google Chrome\";v=\"102\"",
-                "sec-ch-ua-mobile": "?0",
-                "sec-ch-ua-platform": "\"Windows\"",
-                "sec-fetch-dest": "empty",
-                "sec-fetch-mode": "cors",
-                "sec-fetch-site": "cross-site"
-            },
             success: (res) => {
                 for (let job of res.data) {
                     html = cleanHTML(job.publicDescription);
