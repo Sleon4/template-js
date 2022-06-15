@@ -1,6 +1,6 @@
 (function () {
     const jobs = [];
-    let counter = 0, limit = 0, json = null;
+    let counter = 0, limit = 0, json = null, html = '';
 
     do {
         $.ajax({
@@ -20,6 +20,11 @@
             },
             success: (res) => {
                 for (let job of res.data) {
+                    html = cleanHTML(job.publicDescription);
+
+                    let div = document.createElement('div');
+                    div.innerHTML = html;
+
                     jobs.push({
                         title: job.title.trim(),
                         url: `https://visionairepartners.com/wp-content/plugins/bullhorn-oscp/#/jobs/${job.id}`,
@@ -27,6 +32,8 @@
                         location: `${job.address.city}, ${job.address.state}`,
                         type: job.employmentType.trim(),
                         temp: 1,
+                        html: html,
+                        jobdesc: cleanHTML(div.textContent.trim())
                     });
                 }
 
