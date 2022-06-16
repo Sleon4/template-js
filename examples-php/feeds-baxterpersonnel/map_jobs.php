@@ -2,7 +2,7 @@
 
 $row = $j;
 
-if (((string) $row['salary_frequency']) === 'hour' && preg_match("/9/i", trim((string) strtolower($row["id"])))) {
+if ($row['salary_frequency'] === 'hour' && preg_match("/9/i", $row["id"])) {
     $job = [
         'title' => trim((string) $row['title']),
         'reqid' => (string) $row['id'],
