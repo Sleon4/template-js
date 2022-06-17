@@ -30,7 +30,9 @@
                 limit = res.total;
                 counter+= 30;
             },
-            error: (err) => msg(err)
+            error: function(err) {
+                msg(err)
+            }
         });
     } while(counter < limit);
 
