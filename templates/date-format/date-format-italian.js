@@ -16,15 +16,23 @@ const formatDate = (elem) => {
 
         date = date.replace(/gennaio|febbraio|marzo|aprile|maggio|giugno/gm, (dt) => {
             return {
-                'gennaio': 'January', 'febbraio': 'February', 'marzo': 'March',
-                'aprile': 'April', 'maggio': 'May', 'giugno': 'June',
+                'gennaio': 'January',
+                'febbraio': 'February',
+                'marzo': 'March',
+                'aprile': 'April',
+                'maggio': 'May',
+                'giugno': 'June',
             }[dt];
         }).trim();
 
         date = date.replace(/luglio|agosto|settembre|ottobre|novembre|dicembre/gm, (dt) => {
             return {
-                'luglio': 'July', 'agosto': 'August', 'settembre': 'September',
-                'ottobre': 'October', 'novembre': 'November', 'dicembre': 'December'
+                'luglio': 'July',
+                'agosto': 'August',
+                'settembre': 'September',
+                'ottobre': 'October',
+                'novembre': 'November',
+                'dicembre': 'December'
             }[dt];
         }).trim();
 
