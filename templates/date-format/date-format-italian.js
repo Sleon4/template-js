@@ -1,5 +1,6 @@
 const formatDate = (elem) => {
-    dateAll = elem.textContent
+    let dateAll = elem
+        .textContent
         .trim()
         .split('scade')
         .map(date => date.trim())
