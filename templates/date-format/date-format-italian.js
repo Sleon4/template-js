@@ -1,17 +1,7 @@
-const formatDate = (elem) => {
-    let dateAll = elem
-        .textContent
-        .trim()
-        .split('scade')
-        .map(date => date.trim())
-        .map(date => date === 'nuovo' ? new Date().toLocaleDateString('en-US') : date)
-        .join('-')
-        .replace(/(\r\n\t|\n|\r|\t)/gm, '')
-        .split('scaduto')
-        .map(date => date.trim());
+const formatDate = (dateAll) => {
+    if (typeof dateAll === 'string') dateAll = [dateAll];
 
-    dateAll = dateAll.length >= 2 ? [dateAll.join('-')].pop().split('-') : dateAll.pop().split('-');
-    dateAll = dateAll.map(date => {
+    return dateAll.map(date => {
         date = date.replace(/lunedì|martedì|mercoledì|giovedì|venerdì|sabato|domenica/gm, '').trim();
 
         date = date.replace(/gennaio|febbraio|marzo|aprile|maggio|giugno/gm, (dt) => {
@@ -38,6 +28,4 @@ const formatDate = (elem) => {
 
         return new Date(date).toLocaleDateString('en-US');
     });
-
-    return dateAll;
 };

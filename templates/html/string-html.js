@@ -1,0 +1,1 @@
+const stringToHTML = (str) => new DOMParser().parseFromString(str, 'text/html').body;

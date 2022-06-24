@@ -1,5 +1,0 @@
-waitForPageText -> YES
-waitForPageLoadEvent -> NO
-waitForPageResources -> YES
-injectDefaultCodes -> NO
-reloadPageAsAttemptToPagination -> YES
