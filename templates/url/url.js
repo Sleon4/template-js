@@ -1,0 +1,1 @@
+const getURL = (url) => new URLSearchParams(url.split('?').pop());

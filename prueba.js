@@ -1,180 +1,186 @@
-//EXTRACT
-(function () {
-    var out = {};
-    var jobs = [];
+(function() {
+  var out = {};
+  var jobs = [];
+    out["pass_it"] = pass_it;
+  if (out["pass_it"]["salir"]){
+    var job = {};
+    job.title = 'holaa'+out["pass_it"].avancePag;
+    jobs.push(job);
+  }else{
 
-    // PASS_IT
-    out.pass_it = pass_it;
+  if (document.querySelector(out["pass_it"]["selectorDescription"])){
+    var job = {};
+    job.title = out["pass_it"]["title"]//document.querySelector("").textContent.replace(/\[.*?\]/g, '').trim();
+    job.location = out["pass_it"]["location"];//document.querySelector("").textContent.trim();
+    job.dateposted_raw = out["pass_it"].dateposted_raw
+    if (typeof out["pass_it"].reqid!="undefined" )
+    job.reqid = out["pass_it"].reqid
+    else
+     job.reqid = document.querySelector("div.job-url.ng-hide>a").href.split("rpid=").pop()
+    job.source_salary = out["pass_it"].source_salary
+    job.url = document.querySelector("div.job-url.ng-hide>a").href//.getAttribute("data-url")//.href.trim();//window.location.href;
 
-    if (out.pass_it.exit) {
-      var job = {};
-      job.title = "job Ghost";
-      jobs.push(job);
-    } else {
-      // SE EXTRAEN DATOS DEL TEMPLATE O DEL PASS_IT
-      if (document.querySelector(out.pass_it.descriptionSelector)) {
-        var job = {};
-        job.title = out.pass_it.title;
-        job.url = window.location.href;
-        job.location = out.pass_it.location;
-        job.source_location = out.pass_it.source_location;
-        job.reqid = job.url.split("/").pop()
+    //removeSelectorContainsText("CALL OR TEXT\\:div", document)
+    //removeSelectorContainsText("CALL OR TEXT\\:div", document)
+    removeSelector('script' , document)
+    job.html = document.querySelector(out["pass_it"]["selectorDescription"]).innerHTML.trim();
+   		job.html = removeTextBefore(job.html, "Requirements and Qualifications:", false);
+      job.html = removeTextBefore(job.html, "Loading...", true);
+      job.html = removeTextBefore(job.html, "Essential Duties & Responsibilities", false);
+      //job.html = removeTextBefore(job.html, "Who We Are", false);
+	  job.html = removeTextBefore(job.html, "finalize your application!",true)
+      job.html = removeTextAfter(job.html, "A.S.G. STAFFING",true)
+      job.html = removeTextAfter(job.html, "(please call/txt to schedule", true);
+      job.html = removeTextAfter(job.html, "Call or Text Us", true);
+      job.html        = cleanHTML(job.html);
+      job.jobdesc     = job.html.replace(/&nbsp;/g," ").replace(/\<(.*?)\>/g, ""); // clean tags
+      job.jobdesc     = cleanHTML(job.jobdesc);
 
-        // DESCRIPTION
-        var full_html = document.querySelector(out.pass_it.descriptionSelector);
+  job.temp = 1;
 
-        if (typeof cleanHTML == "undefined")
-          cleanHTML = function (x) {
-            return x;
-          };
-        if (typeof msg == "undefined") msg = console.log;
+  jobs.push(job);
+     if(document.querySelector("div.job-actions-back > button"))
+       document.querySelector("div.job-actions-back > button").click()
 
-        //-------------------------------------------------------------------------//
+  }
+  }
 
-        for (const a of full_html.querySelectorAll("a, img, script, style, button")) {
-          if (a) {
-            a.remove();
-          }
+  out["jobs"] = jobs;
+  return out;
+
+
+})();
+ function removeTextBefore(html, text, flag) {
+      var newHtml = html;
+      if (newHtml.indexOf(text) > -1) {
+        newHtml = newHtml.split(text).pop();
+        if (!flag) {
+          newHtml = "<h3>" + text + "</h3>" + newHtml;
         }
+      }
+      return newHtml;
+    }
+    function removeTextAfter(html, text, flag) {
+      var newHtml = html;
+      if (newHtml.indexOf(text) > -1) {
+        newHtml = newHtml.split(text).shift();
+        if (!flag) {
+          newHtml = newHtml + "<p>" + text + "</p>";
+        }
+      }
+      return newHtml;
+    }
+  function removeSelector(selectorDom, elements){
+  selectorDom.split(',').forEach(selector=>{elements.querySelectorAll(selector).forEach(function(elem){elem.remove()})})
+}
+function removeSelectorContainsText(textSelector, elements){
+  let selectors = textSelector.split(',');
+  selectors.forEach(function(selector){
+  let text = selector.split('\\:').shift(); let itemselec = selector.split('\\:').pop();
+    elements.querySelectorAll(itemselec).forEach(function(elem){RegExp(text).test(elem.innerText)?elem.remove():null})})
+}
 
-        //***************************************************************************** */
 
-        // REMOVER DESDE ALGUN TEXTO
-        job.html = full_html.innerHTML.trim();
-        job.html = job.html.replace(/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/g, "");
-        job.html = job.html.replace(
-          /(([\d\w]|%[a-fA-F\d]{2,2})+(:([\d\w]|%[a-fA-f\d]{2,2})+)?@)?([\d\w][-\d\w]{0,253}[\d\w]\.)+[\w]{2,4}(:[\d]+)?(\/([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)*(\?(&?([-+_~.\d\w]|%[a-fA-f\d]{2,2})=?)*)?(#([-+_~.\d\w]|%[a-fA-f\d]{2,2})*)?/g,
-          ""
-        );
+/*(function () {
+    const out = {};
+    const jobs = [];
 
-        /***************************BEFORE*******************************/
-        job.html = removeTextBefore(job.html, "Position Overview:", false);
+    out['pass_it'] = pass_it;
 
-        /***************************AFTER*******************************/
-        //job.html = removeTextAfter(job.html, "", true);
-
-        job.html = cleanHTML(job.html);
-
-        job.html = full_html.innerHTML.trim();
-        job.jobdesc = full_html.textContent.trim();
-
-        var newTemplate = document.createElement("div");
-        newTemplate.innerHTML = job.html;
-
-        job.jobdesc = newTemplate.textContent.trim();
-        job.jobdesc = cleanHTML(job.jobdesc);
-
-        job.temp = 1;
+    if (out['pass_it'].goOut) {
+        const job = { title: 'Finish' };
         jobs.push(job);
-      }
+    } else {
+        if (document.querySelector(out['pass_it'].selectorDesc)) {
+            const job = {};
+            const remove_selectors = [
+                'a',
+                'img',
+                'video',
+                'button',
+                'input',
+                'style',
+                'javascript',
+                'script',
+            ];
+
+            job.title = out['pass_it'].title;
+            job.url = window.location.href;
+            job.reqid = out['pass_it'].reqid;
+            job.location = out['pass_it'].location;
+            job.source_salary = out['pass_it'].source_salary;
+          	job.dateposted_raw = new Date(out['pass_it'].dateposted_raw).toLocaleDateString();
+
+            job.temp = 'Dic-2021';
+
+            const full_html = document.querySelector(out['pass_it'].selectorDesc);
+
+          	const searching = document.querySelectorAll('span');
+      		searching.forEach(item => {
+        		if (item.textContent.search(/Pay Rates/g) > -1) {
+                	job.source_salary = item.textContent.replace('Pay Rates', '').trim().split(' ').shift();
+            	}
+        	});
+
+            // remove something from the jobdatata
+            if (remove_selectors.length > 0) {
+                remove_selectors.forEach(elem => {
+                    if (full_html.querySelector(elem)) {
+                        let items = full_html.querySelectorAll(elem);
+                        for (const selector of items) selector.remove();
+                    }
+                });
+            }
+
+            job.html = full_html.innerHTML.trim();
+            job.html = cleanHTML(job.html);
+
+            let temp = document.createElement('div');
+            temp.innerHTML = job.html;
+
+            job.jobdesc = temp.textContent.trim();
+            job.jobdesc = cleanHTML(job.jobdesc);
+
+            job.html = removeTextBefore(job.html, 'Position Summary:', true);
+            job.html = removeTextAfter(job.html, 'ASG is an Equal Opportunity Employer.', true);
+          	job.html = job.html.replace('Loading...', '').trim();
+
+            if (job.jobdesc.length < 250) {
+                job.html = '';
+                job.jobdesc = '';
+            }
+
+            jobs.push(job);
+        } else {
+            msg('Algo pasa con la descripcion');
+        }
     }
 
-    out.jobs = jobs;
+    out['jobs'] = jobs;
+    out.waitFor = out['pass_it'].selectorJobs;
+
+    if (out['pass_it'].try >= 3) {
+        const ghost = { title: 'Boo job!' };
+        //out['pass_it'].try = 0;
+        jobs.push(ghost);
+    }
+
     return out;
-  })();
+})();
 
-  function removeTextBefore(html, text, flag) {
-    var newHtml = html;
-    if (newHtml.indexOf(text) > -1) {
-      newHtml = newHtml.split(text).pop();
-      if (!flag) {
-        newHtml = "<h3>" + text + "</h3>" + newHtml;
-      }
-    }
+function removeTextBefore(html, text, flag) {
+    let keyWord;
+    let newHtml = html;
+
+    if (newHtml.indexOf(text) > -1) keyWord = text;
+    if (newHtml.indexOf(text) > -1) newHtml = newHtml.split(text).pop();
+    if (!flag) if (keyWord) newHtml = '<h3>' + keyWord + '</h3>' + newHtml;
     return newHtml;
-  }
+}
 
-  function removeTextAfter(html, text, flag) {
-    var newHtml = html;
-    if (newHtml.indexOf(text) > -1) {
-      newHtml = newHtml.split(text).shift();
-      if (!flag) {
-        newHtml = newHtml + "<p>" + text + "</p>";
-      }
-    }
+function removeTextAfter(html, text, flag) {
+    let newHtml = html;
+    if (newHtml.indexOf(text) > -1) newHtml = newHtml.split(text).shift();
+    if (!flag) newHtml = newHtml + '<p>' + text + '</p>';
     return newHtml;
-  }
-
-  //BEFORE EXTRACT
-  (function () {
-    var out = {};
-    var jobsSelector = "div[class='jobs-list'] div[class='job-item job-items-3 clearfix']"; //SELECTOR DE LOS TRABAJOS
-    var descriptionSelector = "div[class='job-description']"; //SELECTOR DE DESCRIPTION DE LOS JOBS
-
-    // PASS_IT
-    if (typeof pass_it == "undefined") {
-      pass_it = {};
-    }
-
-    if (!pass_it.cont) {
-      out.pass_it = {
-        cont: 0,
-        exit: false,
-        jobsSelector: jobsSelector,
-        descriptionSelector: descriptionSelector,
-      };
-    } else {
-      out.pass_it = pass_it;
-    }
-
-    // JOBS A EXTRAER
-    var element = document.querySelectorAll(jobsSelector)[out.pass_it.cont];
-
-    // SE GUARDA INFORMACION DEL JO EN EL PASS_IT
-    if (element) {
-      var title = element.querySelector('span[ng-bind="::job.jobTitle"]');
-      if (title) out.pass_it.title = title.textContent.trim();
-
-      // LOCATION
-      var source_location = element.querySelector('span[ng-bind*="job.location"]');
-      if (source_location) {
-        out.pass_it.source_location = source_location.textContent.trim();
-        out.pass_it.location = out.pass_it.source_location;
-
-        if(out.pass_it.location.search(/Remote/) > -1) out.pass_it.location = "Walnut Creek, California, US"
-      }
-      if(!out.pass_it.location) out.pass_it.location = "Walnut Creek, California, US"
-
-      // SE DA CLICK EN EL JOB
-      element.click();
-      out.waitfor = descriptionSelector;
-    } else {
-      out.pass_it.exit = true;
-    }
-
-    return out;
-  })();
-
-  //PAGINATION
-  (function () {
-    var out = {};
-
-    // PAGINACION
-    var next_page_selector = "ul[class='paging-block'] li[class='paging-item paging-item-active'] + li a";
-    var clickable_elem = document.querySelector(next_page_selector);
-
-    out.pass_it = pass_it;
-    out.pass_it.cont++;
-
-    // CONDICION PARA PARAR PAGINACION
-    if (out.pass_it.exit) {
-      if (clickable_elem) {
-        out.has_next_page = true;
-        out.pass_it.cont = 0;
-        out.pass_it.exit = false;
-        clickable_elem.click()
-      msg("\x1b[43mSIGUIENTE PAGINA\x1b[0m");
-      } else {
-      out.has_next_page = false;
-      msg("\x1b[41mFIN DE PAGINACION\x1b[0m");
-      }
-    } else {
-      out.has_next_page = true;
-      document.querySelector("div[class='job-actions job-actions-top'] div[class='job-actions-back'] button").click(); // URL DEL JOBPAGE
-      out.waitfor = out.pass_it.jobsSelector;
-      msg("\x1b[43mSIGUIENTE TRABAJO\x1b[0m");
-    }
-
-    out.wait = true
-    return out;
-  })();
+}*/

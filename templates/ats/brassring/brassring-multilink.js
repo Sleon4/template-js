@@ -94,10 +94,7 @@
 
                     for (let job of list) {
                         let locations = [];
-                        let jobInfo = {
-                            url: job.Link.trim(),
-                            temp: 1
-                        };
+                        let jobInfo = { url: job.Link.trim(), temp: 1 };
 
                         for (let question of job.Questions) {
                             if (question.QuestionName === 'jobtitle') jobInfo.title = question.Value.trim();

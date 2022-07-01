@@ -1,6 +1,7 @@
 (() => {
     const jobs = [], partnerId = 25632, siteId = 5649;
     let cont = 0, limit = 0, strTotal = '';
+
     const stringToHTML = (str) => new DOMParser().parseFromString(str, 'text/html').body;
 
     const data = {
@@ -81,10 +82,7 @@
 
                 for (let job of list) {
                     let locations = [];
-                    let jobInfo = {
-                        url: job.Link.trim(),
-                        temp: 1
-                    };
+                    let jobInfo = { url: job.Link.trim(), temp: 1 };
 
                     for (let question of job.Questions) {
                         if (question.QuestionName === 'jobtitle') jobInfo.title = question.Value.trim();
@@ -92,6 +90,7 @@
                         if (question.QuestionName === 'formtext1') jobInfo.source_jobtype = question.Value.trim();
                         if (question.QuestionName === 'lastupdated') jobInfo.dateposted_raw = new Date(question.Value.trim()).toLocaleDateString('en-US');
                         if (['formtext12', 'formtext10'].includes(question.QuestionName)) locations.push(question.Value.trim());
+
                         if (question.QuestionName === 'jobdescription') {
                             jobInfo.html = question.Value.trim();
                             jobInfo.jobdesc = stringToHTML(jobInfo.html).textContent.trim();
