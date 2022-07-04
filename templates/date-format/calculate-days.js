@@ -3,8 +3,8 @@ const calculateDates = (date, cont) => {
     return date;
 }
 
-msg(
+console.log(
     calculateDates(
-        new Date(), -Math.abs(24)
+        new Date(), -Math.abs(10)
     ).toLocaleDateString('en-US')
 );
