@@ -1,10 +1,15 @@
-const calculateDates = (date, cont) => {
-    date.setDate(date.getDate() + cont);
+const calculateYears = (date, year) => {
+    date.setMonth(date.getMonth() + (year * 12));
     return date;
 };
 
+let date = parseInt(
+    'posted 3 years ago'.replace(/[a-zA-Z]/gm, '').trim()
+);
+
+console.log(`Años obtenidos: ${date}`);
+
 console.log(
-    calculateDates(
-        new Date(), -Math.abs(10)
-    ).toLocaleDateString('en-US')
+    `Fecha posteada hace ${date} años: ` +
+    calculateYears(new Date, -Math.abs(date)).toLocaleDateString('en-US')
 );
