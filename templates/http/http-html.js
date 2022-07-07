@@ -9,4 +9,4 @@ const httpHtml = (url) => {
     xhr.send();
 
     return response;
-}
+};

@@ -1,7 +1,8 @@
 (() => {
-    const jobs = [], partnerId = 25632, siteId = 5649;
-    let cont = 0, limit = 0, strTotal = '';
+    const jobs = [], partnerId = 25416, siteId = 5429;
+    let cont = 0, limit = 0, i = 0, strTotal = '';
 
+    // functions
     const stringToHTML = (str) => new DOMParser().parseFromString(str, 'text/html').body;
 
     const data = {
@@ -80,6 +81,12 @@
             success: res => {
                 let list = res.Jobs.Job;
 
+                if (i === 0) {
+                    strTotal = `${res.JobsCount / list.length}`.split('.');
+                    limit = strTotal.length > 1 ? (parseInt(strTotal.shift()) + 1) : parseInt(strTotal.shift());
+                    i = 1;
+                }
+
                 for (let job of list) {
                     let locations = [];
                     let jobInfo = { url: job.Link.trim(), temp: 1 };
@@ -87,11 +94,10 @@
                     for (let question of job.Questions) {
                         if (question.QuestionName === 'jobtitle') jobInfo.title = question.Value.trim();
                         if (question.QuestionName === 'reqid') jobInfo.reqid = question.Value.trim();
-                        if (question.QuestionName === 'formtext1') jobInfo.source_jobtype = question.Value.trim();
                         if (question.QuestionName === 'lastupdated') jobInfo.dateposted_raw = new Date(question.Value.trim()).toLocaleDateString('en-US');
-                        if (['formtext12', 'formtext10'].includes(question.QuestionName)) locations.push(question.Value.trim());
+                        if (['formtext9', 'formtext10'].includes(question.QuestionName)) locations.push(question.Value.trim());
 
-                        if (question.QuestionName === 'jobdescription') {
+                        if (question.QuestionName === 'formtext3') {
                             jobInfo.html = question.Value.trim();
                             jobInfo.jobdesc = stringToHTML(jobInfo.html).textContent.trim();
                         }
@@ -102,8 +108,6 @@
                     jobs.push(jobInfo);
                 }
 
-                strTotal = `${res.JobsCount / list.length}`.split('.');
-                limit = strTotal.length > 1 ? (parseInt(strTotal.shift()) + 1) : parseInt(strTotal.shift());
                 cont++;
             },
             error: err => msg(err)
