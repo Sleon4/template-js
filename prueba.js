@@ -1,15 +1,34 @@
-const calculateYears = (date, year) => {
-    date.setMonth(date.getMonth() + (year * 12));
-    return date;
-};
+// https://www.talent.com/private/tools/content/scraper/spiderCodeTool.php?scanid=230248
 
-let date = parseInt(
-    'posted 3 years ago'.replace(/[a-zA-Z]/gm, '').trim()
-);
+// (() => {
+//     const jobs = [];
+//     let cont = 0, limit = 0, strTotal = "", i = 0;
+//     const data = { "limit": 20, "offset": cont, "searchText": "", "appliedFacets": {} };
 
-console.log(`Años obtenidos: ${date}`);
+//     msg(
+//         window.location.href
+//         // window.location.origin + '/wday/cxs/' + window.location.host.split('.').shift() + window.location.pathname + '/jobs'
+//     )
 
-console.log(
-    `Fecha posteada hace ${date} años: ` +
-    calculateYears(new Date, -Math.abs(date)).toLocaleDateString('en-US')
-);
+//     // $.ajax({
+//     //     url: 'https://rb.wd5.myworkdayjobs.com/wday/cxs/rb/FRS/jobs',
+//     //     headers: {
+//     //         "accept": "application/json",
+//     //         "accept-language": "en-US",
+//     //         "content-type": "application/json",
+//     //         "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"92\", \"Opera GX\";v=\"78\"",
+//     //         "sec-ch-ua-mobile": "?0",
+//     //         "sec-fetch-dest": "empty",
+//     //         "sec-fetch-mode": "cors",
+//     //         "sec-fetch-site": "same-origin"
+//     //     },
+//     //     type: 'POST',
+//     //     dataType: 'json',
+//     //     data: JSON.stringify(data),
+//     //     async: false,
+//     //     success: res => msg(res),
+//     //     error: err => msg(err)
+//     // });
+
+//     return { jobs: jobs };
+// });
