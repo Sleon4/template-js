@@ -63,7 +63,7 @@
 
                     // calculate dates
                     let date = job.postedOn.toLowerCase().trim();
-                    let num = date.replace(/[a-zA-Z]/gm, '').trim();
+                    let num = date.replace(/[a-zA-Z+]/gm, '').trim();
 
                     if (num === '') {
                         job_info.dateposted_raw = new Date().toLocaleDateString('en-US');
