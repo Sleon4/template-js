@@ -130,7 +130,12 @@
                             error: errDesc => msg(errDesc)
                         });
 
-                        locations.forEach(loc => jobs.push({ ...job_info, location: loc }));
+                        locations.forEach(loc => {
+                            jobs.push({
+                                ...job_info,
+                                location: loc.split('-').map(lc => lc.trim()).reverse().join(', ')
+                            });
+                        });
                     }
                 },
                 error: err => msg(err)

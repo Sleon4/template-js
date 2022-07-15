@@ -1,9 +1,9 @@
 (() => {
     const jobs = [];
-    const code = 'SalesCareers';
-    const referer = `https://mattressfirm.wd1.myworkdayjobs.com/en-US/${code}`;
-    const url = `https://mattressfirm.wd1.myworkdayjobs.com/wday/cxs/mattressfirm/${code}/jobs`;
-    const url_desc = `https://mattressfirm.wd1.myworkdayjobs.com/wday/cxs/mattressfirm/${code}`;
+    const code = 'speedcastcareers';
+    const referer = `https://speedcast.wd1.myworkdayjobs.com/es/${code}`;
+    const url = `https://speedcast.wd1.myworkdayjobs.com/wday/cxs/speedcast/${code}/jobs`;
+    const url_desc = `https://speedcast.wd1.myworkdayjobs.com/wday/cxs/speedcast/${code}`;
     let cont = 0, limit = 0, i = 0, offset = 0, strTotal = '';
 
     // functions
@@ -104,7 +104,12 @@
                         error: errDesc => msg(errDesc)
                     });
 
-                    locations.forEach(loc => jobs.push({ ...job_info, location: loc }));
+                    locations.forEach(loc => {
+                        jobs.push({
+                            ...job_info,
+                            location: loc.split('-').map(lc => lc.trim()).reverse().join(', ')
+                        });
+                    });
                 }
             },
             error: err => msg(err)
