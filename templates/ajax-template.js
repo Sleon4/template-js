@@ -12,7 +12,13 @@
             "accept": "application/json, text/plain, */*",
             "content-type": "application/json;charset=UTF-8"
         },
-        success: res => msg(res),
+        success: res => {
+            if (i === 0) {
+                i = 1;
+            }
+
+            msg(res)
+        },
         error: err => msg(err)
     });
 
