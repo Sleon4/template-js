@@ -1,7 +1,8 @@
 (() => {
+    const jobs = [];
     const links = [
         { code: 'BeckmanCoulterDiagnosticsJobs', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/BeckmanCoulterDiagnosticsJobs/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/es/BeckmanCoulterDiagnosticsJobs' },
-        // { code: 'CytivaJobsPP', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/CytivaJobsPP/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/es/CytivaJobsPP' },
+        { code: 'CytivaJobsPP', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/CytivaJobsPP/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/es/CytivaJobsPP' },
         // { code: 'SCIEXJobs', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/SCIEXJobs/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/es/SCIEXJobs' },
         // { code: 'OTTHydroMetJobs', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/OTTHydroMetJobs/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/en-US/OTTHydroMetJobs' },
         // { code: 'DanaherCorporateJobs', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/DanaherCorporateJobs/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/en-US/DanaherCorporateJobs' },
@@ -21,13 +22,12 @@
         // { code: 'PhenomenexJobs', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/PhenomenexJobs/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/en-US/PhenomenexJobs' },
         // { code: 'LeicaMicrosystemsJobs', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/LeicaMicrosystemsJobs/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/en-US/LeicaMicrosystemsJobs' },
         { code: 'ChemTreatJobs', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/ChemTreatJobs/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/en-US/ChemTreatJobs' },
-        // { code: 'AldevronJobs', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/AldevronJobs/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/en-US/AldevronJobs' },
-        // { code: 'MammotomeJobs', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/MammotomeJobs/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/en-US/MammotomeJobs' },
+        { code: 'AldevronJobs', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/AldevronJobs/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/en-US/AldevronJobs' },
+        { code: 'MammotomeJobs', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/MammotomeJobs/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/en-US/MammotomeJobs' },
         { code: 'HemoCueJobs', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/HemoCueJobs/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/en-US/HemoCueJobs' },
-        // { code: 'IDBSJobs', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/IDBSJobs/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/en-US/IDBSJobs' },
-        // { code: 'LINXJobs', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/LINXJobs/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/en-US/LINXJobs' }
+        { code: 'IDBSJobs', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/IDBSJobs/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/en-US/IDBSJobs' },
+        { code: 'LINXJobs', url: 'https://danaher.wd1.myworkdayjobs.com/wday/cxs/danaher/LINXJobs/jobs', referer: 'https://danaher.wd1.myworkdayjobs.com/en-US/LINXJobs' }
     ];
-    const jobs = [];
 
     // functions
     const stringToHTML = (str) => new DOMParser().parseFromString(str, 'text/html').body;
@@ -89,7 +89,7 @@
 
                         // calculate dates
                         let date = job.postedOn.toLowerCase().trim();
-                        let num = date.replace(/[a-zA-Z+]/gm, '').trim();
+                        let num = date.replace(/[a-zA-Z]/gm, '').trim();
 
                         if (num === '') {
                             job_info.dateposted_raw = new Date().toLocaleDateString('en-US');
@@ -133,7 +133,7 @@
                         locations.forEach(loc => {
                             jobs.push({
                                 ...job_info,
-                                location: loc.split('-').map(lc => lc.trim()).reverse().join(', ')
+                                location: loc.split('-').map(lc => lc.replace(/[.]/gm, '').trim()).reverse().join(', ')
                             });
                         });
                     }
