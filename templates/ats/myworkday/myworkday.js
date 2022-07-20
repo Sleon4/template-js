@@ -107,7 +107,7 @@
                     locations.forEach(loc => {
                         jobs.push({
                             ...job_info,
-                            location: loc.split('-').map(lc => lc.trim()).reverse().join(', ')
+                            location: loc.split('-').map(lc => lc.replace(/[.]/gm, '').trim()).reverse().join(', ')
                         });
                     });
                 }
